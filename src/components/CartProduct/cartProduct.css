@@ -1,0 +1,32 @@
+.order-details-product {
+    margin-top: 1.25rem;
+}
+
+.order-details-product-img {
+    flex-basis: 25%;
+}
+
+.order-details-product-img img {
+    width: 100%;
+}
+
+.order-details-product-data {
+    flex-basis: 50%;
+    padding: 0 1rem;
+    font-size: 1.2rem;
+    justify-content: center;
+}
+
+.order-details-product-data > div:first-child {
+    font-size: 1.5rem;
+}
+
+.order-details-product-action {
+    flex-basis: 25%;
+    justify-content: center;
+}
+
+.order-details-product-remove {
+    width: 100%;
+    margin-top : 1rem;
+}

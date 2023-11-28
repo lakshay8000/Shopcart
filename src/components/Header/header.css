@@ -1,0 +1,17 @@
+.header-wrapper {
+    height: 5rem;
+}
+
+#title {
+    font-size: 1.5rem;
+    letter-spacing: .25rem;
+    font-weight: bold;
+}
+
+#title:hover {
+    cursor: pointer;
+}
+
+#navbar-dropdown {
+    margin-right: 1rem;
+}

@@ -1,0 +1,21 @@
+html {
+    box-sizing: border-box;
+    --blue-grey : #ecf0f1;
+    --pale-blue : #2c3e50;
+    --deep-grey : #999;
+    --jean-blue : #365875;
+    --light-blue : #95afc0;
+    --sky-blue : #dff9fb;
+    --dark-sky-blue : #c7ecee;
+    --light-grey : #ccc;
+}
+
+*, *::after, *::before {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+

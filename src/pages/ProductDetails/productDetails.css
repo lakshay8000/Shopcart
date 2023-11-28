@@ -1,0 +1,52 @@
+.product-details-img {
+    /* We will give a fixed width and height to this div and set the img width to 100% so that the image fits perfectly in this div. */
+    width: 20rem;
+    height: 20rem;
+
+    margin-top: 2rem;
+    align-self: center;  /* It will vertically align the image in the center. */
+}
+
+.product-details-img img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.product-detail-box {
+    flex-basis: 60%;  /* flex-basis will give the product-detail-box 60% space of the flex, it will avoid it to merge with the image. */
+    
+    margin-top: 3rem;
+}
+
+.product-details-name {
+    font-size: 3rem;
+}
+
+.product-details-price {
+    margin-top: 1rem;
+    font-size: 1.5rem;
+}
+
+.product-description {
+    margin-top: .5rem;
+    line-height: 1.75;
+    font-size: 1rem;
+    text-align: justify;  /* Stretches the lines so that each line has equal width */
+}
+
+.product-description-title {
+    margin-top: 1rem;
+    font-size: 1.25rem;
+    color: var(--deep-grey);
+}
+
+.product-details-action {
+    width: 250px;  /* We will give it a fixed width */
+    margin-top: 1.25rem;
+}
+
+.product-details-action a {
+    color: white;
+    width: 100%;
+    height: 100%;
+}
