@@ -68,6 +68,7 @@ function Header(props) {
                                             await axios.get(`${import.meta.env.VITE_FAKE_STORE_URL}/logout`, {withCredentials : true});
                                             removeCookie("backupToken");
                                             setUser(null);
+                                            navigate("/");
                                         }}
                                     >
                                         Logout

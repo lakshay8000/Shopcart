@@ -4,7 +4,7 @@ import "./cart.css";
 import { Link } from "react-router-dom";
 import CartProduct from "../../components/CartProduct/CartProduct";
 import CartContext from "../../providers/CartContext";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getProductInfo } from "../../apis/fakeStoreProdApis";
 import axios from "axios";
 
@@ -12,18 +12,32 @@ import axios from "axios";
 
 function Cart() {
     const { cart } = useContext(CartContext);
+    const [products, setProducts] = useState([]);
 
     async function downloadCartProducts() {
         if (cart && cart.products) {
+            const productQuantityMapping= {};
+            cart.products.forEach((product) => productQuantityMapping[product.productId] = product.quantity);
+            // console.log(productQuantityMapping);
+
             const productsPromise = cart.products.map((product) => axios.get(getProductInfo(product.productId)))
             const productsPromiseResponse= await axios.all(productsPromise);
             // console.log(productsPromiseResponse);
+
+            // create downloadedProducts array and add quantity in the product object
+            const downloadedProducts= productsPromiseResponse.map((product) => { 
+                                          return (
+                                              {...product.data, quantity : productQuantityMapping[product.data.id]}
+                                          )});
+            setProducts([...downloadedProducts]);
         }
     }
 
     useEffect(() => {
         downloadCartProducts();
     }, [cart]);
+
+    console.log(products);
 
     return (
         <div className="container">
@@ -37,12 +51,16 @@ function Cart() {
                         <div className="order-details-title fw-bold">
                             Order Details
                         </div>
-
-                        <CartProduct />
-                        <CartProduct />
-                        <CartProduct />
-                        <CartProduct />
-
+                        {
+                            (products.length > 0) &&
+                            products.map((product) => <CartProduct 
+                                                          key= {product.id}
+                                                          title= {product.title}
+                                                          image= {product.image}
+                                                          price= {product.price}
+                                                          quantity= {product.quantity}
+                                                      /> )
+                        }
                     </div>
 
 
