@@ -17,11 +17,9 @@ import "./header.css";
 
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../../providers/UserContext';
-import CartContext from "../../providers/CartContext";
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
-import { jwtDecode } from 'jwt-decode';
-import useCart from '../../hooks/useCart';
+import CartContext from '../../providers/CartContext';
 
 
 // point 3 in readme.md
@@ -34,8 +32,7 @@ function Header(props) {
     const {user, setUser} = useContext(UserContext);    // logic of again seting user when page refreshes is in App.jsx
     const [cookies, setCookie, removeCookie] = useCookies(["backupToken"]);
     
-    const [cart, setCart] = useCart(user? user.userId : undefined);     // custom hook, all the logic for getting cart is inside it
-
+    const {cart} = useContext(CartContext);
 
     return (
         <div className='header-wrapper' >

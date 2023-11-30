@@ -9,9 +9,9 @@ import MainRoutes from './routes/MainRoutes';
 import UserContext from './providers/UserContext';
 import CartContext from './providers/CartContext';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { useCookies } from 'react-cookie';
+import fetchUserCart from './helpers/fetchUserCart';
 
 
 
@@ -29,6 +29,14 @@ function App() {
     }
   }, []);
 
+  // on login, we are updating user state, thats why App.jsx will re render and this useEffect will run. And on page refresh it will also run because the whole react app reloads on page refresh 
+  useEffect(() => {
+    fetchUserCart(user? user.userId : undefined, setCart);
+  }, [user]);
+
+
+
+  
   return (
     <CartContext.Provider value={{ cart, setCart }} >
       <UserContext.Provider value={{ user, setUser }}>
