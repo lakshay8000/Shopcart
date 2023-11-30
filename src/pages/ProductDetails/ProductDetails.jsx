@@ -5,39 +5,44 @@ import "./productDetails.css";
 import demoProductImg from "../../assets/demoProductImg.jpg";
 import axios from "axios";
 import { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
-import { getProductInfo } from "../../apis/fakeStoreProdApis";
+import { useNavigate, useParams } from "react-router-dom";
+import { addProductToCart, getProductInfo } from "../../apis/fakeStoreProdApis";
 
 import UserContext from "../../providers/UserContext";
+import CartContext from "../../providers/CartContext";
 
 
 function ProductDetails() {
     const [productInfo, setProductInfo] = useState(null);
+    const navigate = useNavigate();
+    const { productId } = useParams();
 
-    const urlParams= useParams();
-
-    async function downloadProductDetails(id) {
-        const response = await axios.get(getProductInfo(id));
+    async function downloadProductDetails(productId) {
+        const response = await axios.get(getProductInfo(productId));
         // console.log(response.data);
-        setProductInfo({...response.data});
+        setProductInfo({ ...response.data });
     }
+
+    const { user, setUser } = useContext(UserContext);
+    const { setCart } = useContext(CartContext);
 
     useEffect(() => {
-        downloadProductDetails(urlParams.id);
+        downloadProductDetails(productId);
     }, []);
 
-    const {user, setUser} = useContext(UserContext);
-    
-   
     async function handleAddToCart() {
-        console.log(user);
-        const response= await axios.put("http://localhost:8765/carts/1", {
-            userId : urlParams.id,
-            date : new Date(),
-            products : [{productId: productInfo.id, quantity: 1}]
-        });
+        if (user) {
+            const response = await axios.put(addProductToCart(), {
+                                userId: user.userId,
+                                productId: productId
+                             });
+            
+                             setCart({...response.data});    // update cart state
+        }
     }
-    
+
+    console.log(productId);
+
     return (
         <div className="container">
             <div className="row">
@@ -71,17 +76,22 @@ function ProductDetails() {
 
                             <div className="product-action d-flex justify-content-start gap-5">
 
-                                <div 
-                                    className="product-details-action btn btn-primary text-decoration-none" 
+                                <div
+                                    className="product-details-action btn btn-primary text-decoration-none"
                                     id="add-to-cart-button"
-                                    onClick= {handleAddToCart}
+                                    onClick={handleAddToCart}
                                 >
                                     Add to Cart
                                 </div>
 
-                                <div 
-                                    className="product-details-action btn btn-warning text-decoration-none" 
+                                <div
+                                    className="product-details-action btn btn-warning text-decoration-none"
                                     id="go-to-cart-button"
+                                    onClick={() => {
+                                        if (user.userId) {
+                                            navigate(`/cart/${user.userId}`);
+                                        }
+                                    }}
                                 >
                                     Go to Cart
                                 </div>

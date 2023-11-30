@@ -10,8 +10,8 @@ export function getProducts(category) {
     return `${import.meta.env.VITE_FAKE_STORE_URL}/products/category/${category}`;
 }
 
-export function getProductInfo(id) {
-    return `${import.meta.env.VITE_FAKE_STORE_URL}/products/${id}`;
+export function getProductInfo(productId) {
+    return `${import.meta.env.VITE_FAKE_STORE_URL}/products/${productId}`;
 }
 
 export function createUser() {
@@ -24,4 +24,8 @@ export function login() {
 
 export function getCartByUser(userId) {
     return `${import.meta.env.VITE_FAKE_STORE_URL}/carts/user/${userId}`;
+}
+
+export function addProductToCart() {
+    return `${import.meta.env.VITE_FAKE_STORE_URL}/carts`;
 }

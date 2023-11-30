@@ -7,7 +7,10 @@ function ProductBox({id, productImage, name, price}) {
     const navigate= useNavigate();
     
     return (
-        <div className="product-item text-decoration-none d-inline-block" onClick={() => navigate(`/products/${id}`)} >
+        <div 
+            className="product-item text-decoration-none d-inline-block" 
+            onClick={() => navigate(`/products/${id}`)} 
+        >
 
             <div className="product-img d-flex flex-row justify-content-center">
                 <img src= {productImage} />

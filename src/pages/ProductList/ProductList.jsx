@@ -65,7 +65,13 @@ function ProductList() {
                             productList &&
                             productList.map((product) => {
                                 return (
-                                    <ProductBox key= {product.id} id= {product.id} productImage= {product.image} name= {product.title.substring(0, 20) + " ..."} price= {product.price} />
+                                    <ProductBox 
+                                        key= {product.id} 
+                                        id= {product.id} 
+                                        productImage= {product.image} 
+                                        name= {product.title.substring(0, 20) + " ..."} 
+                                        price= {product.price} 
+                                    />
                                 )
                             })
                         }

@@ -25,6 +25,7 @@ function CartProduct({title, price, image, quantity}) {
                             name="" 
                             id="order-details-product-quantity" 
                             className="form-select"
+                            defaultValue={quantity}
                         >
                             {
                                 quantityOptions.map((optionValue) => {
@@ -32,7 +33,6 @@ function CartProduct({title, price, image, quantity}) {
                                         <option 
                                             key= {optionValue} 
                                             value= {optionValue}
-                                            selected= {(optionValue == quantity)? true : false}
                                         > 
                                             {optionValue} 
                                         </option>

@@ -37,7 +37,7 @@ function Cart() {
         downloadCartProducts();
     }, [cart]);
 
-    console.log(products);
+    console.log(cart);
 
     return (
         <div className="container">
