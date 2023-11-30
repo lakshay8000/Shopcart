@@ -3,10 +3,11 @@ import ProductBox from "../../components/ProductBox/ProductBox";
 import axios from "axios";
 import { getProducts, getAllProducts } from "../../apis/fakeStoreProdApis";
 import { useSearchParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 // CSS imports-
 import "./productList.css";
+import CartContext from "../../providers/CartContext";
 
 
 
@@ -32,6 +33,7 @@ function ProductList() {
     useEffect(() => {
         downloadProducts(query.get("category"));
     }, [query.get("category")]);    // whenever the search params will change this useEffect will be executed
+
 
     function searchItems(searchText) {
         const newProductList= [];

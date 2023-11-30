@@ -21,3 +21,7 @@ export function createUser() {
 export function login() {
     return `${import.meta.env.VITE_FAKE_STORE_URL}/auth/login`;
 }
+
+export function getCartByUser(userId) {
+    return `${import.meta.env.VITE_FAKE_STORE_URL}/carts/user/${userId}`;
+}

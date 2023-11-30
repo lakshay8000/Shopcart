@@ -1,12 +1,16 @@
 // CSS imports-
 import "./cart.css";
 
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import CartProduct from "../../components/CartProduct/CartProduct";
+import useCart from "../../hooks/useCart";
 
 
 
 function Cart() {
+    const {userId} = useParams();             // fetch userId from url params
+    const [cart, setCart] = useCart(userId);   
+
     return (
         <div className="container">
             <div className="row">

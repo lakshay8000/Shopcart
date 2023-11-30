@@ -11,13 +11,23 @@ import CartContext from './providers/CartContext';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
+import { useCookies } from 'react-cookie';
 
 
 
 function App() {
   const [user, setUser] = useState(null);
   const [cart, setCart] = useState(null);
-  
+
+  const [cookies, setCookie, removeCookie] = useCookies(["backupToken"]);
+
+  // this logic will again set user when page refreshes-
+  useEffect(() => {
+    if (cookies["backupToken"]) {
+      const decodedToken = jwtDecode(cookies.backupToken);
+      setUser({ username: decodedToken.user, userId: decodedToken.id });
+    }
+  }, []);
 
   return (
     <CartContext.Provider value={{ cart, setCart }} >

@@ -10,16 +10,18 @@ import {
   DropdownMenu,
   DropdownItem,
   NavbarText,
-} from 'reactstrap';
+} from 'reactstrap'; 
 
 // css imports-
 import "./header.css";
 
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../../providers/UserContext';
+import CartContext from "../../providers/CartContext";
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import { jwtDecode } from 'jwt-decode';
+import useCart from '../../hooks/useCart';
 
 
 // point 3 in readme.md
@@ -29,16 +31,10 @@ function Header(props) {
     
     const navigate= useNavigate();
     
-    const {user, setUser} = useContext(UserContext);
+    const {user, setUser} = useContext(UserContext);    // logic of again seting user when page refreshes is in App.jsx
     const [cookies, setCookie, removeCookie] = useCookies(["backupToken"]);
-
-    // this logic will again set user when page refreshes-
-    useEffect(() => {
-        if (cookies["backupToken"]) {
-            const decodedToken = jwtDecode(cookies.backupToken);
-            setUser({username : decodedToken.user, userId : decodedToken.id});
-        }
-    }, []);
+    
+    const [cart, setCart] = useCart(user? user.userId : undefined);     // custom hook, all the logic for getting cart is inside it
 
 
     return (
@@ -53,7 +49,17 @@ function Header(props) {
                                 Options
                             </DropdownToggle>
                             <DropdownMenu >
-                                <DropdownItem onClick= {() => navigate("/cart")} >Cart</DropdownItem>
+                                {
+                                    cart &&
+                                    cart.products &&
+                                    <DropdownItem 
+                                    onClick= {() => navigate(`/cart/${user.userId}`)} 
+                                    >
+                                        Cart {cart.products.length}
+                                    </DropdownItem>
+                                }
+                                
+                                
                                 <DropdownItem>Settings</DropdownItem>
                                 <DropdownItem divider />
                                 

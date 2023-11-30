@@ -19,7 +19,7 @@
 .price-details {
     flex-basis: 30%;
     margin-left: 2rem;
-    position: sticky;  /* the element will get sticked to a fixed place or we can say the position will become fixed when the offset (here the offset is top: 20px) is reached while scrolling */
+    position: sticky;  /* the element will get sticked to a fixed place or we can say the position will become fixed when the offset (here the offset is top: 4.5rem) is reached while scrolling */
     top: 4.5rem;
     align-self: flex-start; /* very imp-> when we give position : sticky to a flexbox element, we have to use align-self property to make it work. align-self overwrites the align-items property of flex, that's why position: sticky will start working if it was not working because of the flexbox */
 }
