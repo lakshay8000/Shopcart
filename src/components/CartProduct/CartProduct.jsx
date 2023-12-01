@@ -3,8 +3,8 @@ import "./cartProduct.css";
 
 
 
-function CartProduct({title, price, image, quantity}) {
-    const quantityOptions= [1,2,3,4,5,6,7,8,9,10];
+function CartProduct({title, price, image, quantity, onRemove, changeQuantity}) {
+    const quantityOptions= [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
 
     return (
         <>
@@ -26,6 +26,7 @@ function CartProduct({title, price, image, quantity}) {
                             id="order-details-product-quantity" 
                             className="form-select"
                             defaultValue={quantity}
+                            onChange={(e) => changeQuantity(e.target.value)}
                         >
                             {
                                 quantityOptions.map((optionValue) => {
@@ -42,7 +43,13 @@ function CartProduct({title, price, image, quantity}) {
                         </select>
                     </div>
                 </div>
-                <div className="order-details-product-remove btn btn-danger" id="order-details-product-remove">Remove</div>
+                <div 
+                    className="order-details-product-remove btn btn-danger" 
+                    id="order-details-product-remove"
+                    onClick= {onRemove}
+                >
+                    Remove
+                </div>
             </div>
            
         </div>

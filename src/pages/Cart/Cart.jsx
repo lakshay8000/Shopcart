@@ -5,13 +5,14 @@ import { Link } from "react-router-dom";
 import CartProduct from "../../components/CartProduct/CartProduct";
 import CartContext from "../../providers/CartContext";
 import { useContext, useEffect, useState } from "react";
-import { getProductInfo } from "../../apis/fakeStoreProdApis";
+import { getProductInfo, updateProductInCart } from "../../apis/fakeStoreProdApis";
 import axios from "axios";
+import UserContext from "../../providers/UserContext";
 
 
 
 function Cart() {
-    const { cart } = useContext(CartContext);
+    const { cart, setCart } = useContext(CartContext);
     const [products, setProducts] = useState([]);
 
     async function downloadCartProducts() {
@@ -37,7 +38,31 @@ function Cart() {
         downloadCartProducts();
     }, [cart]);
 
-    console.log(cart);
+
+    const {user} = useContext(UserContext);
+
+    // we are calling this function via remove button-
+    async function removeProduct(productId) {
+        const response = await axios.put(updateProductInCart(), {
+            userId: user.userId,
+            productId: productId,
+            quantity : 0
+         });
+
+         setCart({...response.data});    // update cart state
+    }
+
+    async function onChangeQuantity(changedQuantity, productId) {
+        console.log(changedQuantity, productId);
+        const response = await axios.put(updateProductInCart(), {
+            userId: user.userId,
+            productId: productId,
+            quantity : changedQuantity
+         });
+
+         setCart({...response.data});    // update cart state
+    }
+
 
     return (
         <div className="container">
@@ -59,6 +84,8 @@ function Cart() {
                                                           image= {product.image}
                                                           price= {product.price}
                                                           quantity= {product.quantity}
+                                                          onRemove= {() => removeProduct(product.id)}
+                                                          changeQuantity={(changedQuantity) => onChangeQuantity(changedQuantity, product.id)}
                                                       /> )
                         }
                     </div>
