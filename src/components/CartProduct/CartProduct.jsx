@@ -15,7 +15,7 @@ function CartProduct({title, price, image, quantity, onRemove, changeQuantity}) 
             </div>
             <div className="order-details-product-data d-flex flex-column">
                 <div id="order-details-product-data-title">{title}</div>
-                <div id="order-details-product-data-price">₹ {price}</div>
+                <div id="order-details-product-data-price">$ {price}</div>
             </div>
             <div className="order-details-product-action d-flex flex-column">
                 <div className="order-details-product-quantity d-flex flex-column row-gap-2">

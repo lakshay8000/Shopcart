@@ -39,6 +39,22 @@ function Cart() {
     }, [cart]);
 
 
+    // for setting price details-
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [netPrice, setNetPrice] = useState(0);
+    useEffect(() => {
+        let totalPriceSum= 0;
+        products.forEach((product) => {
+            totalPriceSum += (product.price * product.quantity);
+        })
+        
+        totalPriceSum= totalPriceSum.toFixed(2);
+        setTotalPrice(totalPriceSum);
+        let netPriceSum= Math.floor(totalPriceSum - 10);
+        setNetPrice(netPriceSum);
+    }, [products]);
+
+
     const {user} = useContext(UserContext);
 
     // we are calling this function via remove button-
@@ -99,7 +115,7 @@ function Cart() {
                             <div className="price-details-data">
                                 <div className="price-details-item d-flex flex-row justify-content-between">
                                     <div>Price</div>
-                                    <div id="total-price"></div>  {/* update through js */}
+                                    <div id="total-price">$ {totalPrice}</div> 
                                 </div>
                                 <div className="price-details-item d-flex flex-row justify-content-between">
                                     <div>Discount</div>
@@ -111,13 +127,13 @@ function Cart() {
                                 </div>
                                 <div className="price-details-item d-flex flex-row justify-content-between">
                                     <div>Total</div>
-                                    <div id="net-price"></div>   {/* update through js */}
+                                    <div id="net-price">$ {netPrice}</div>   
                                 </div>
                             </div>
                         </div>
 
                         <div className="price-details-button-group d-flex flex-column gap-2">
-                            <Link to="/products" className="continue-shopping-btn btn btn-info text-decoration-none" > Continue Shopping </Link>
+                            <Link to="/products?category=All%20Products" className="continue-shopping-btn btn btn-info text-decoration-none" > Continue Shopping </Link>
 
                             <Link to="/" className="checkout-btn btn btn-primary text-decoration-none" > Checkout </Link>
                         </div>
