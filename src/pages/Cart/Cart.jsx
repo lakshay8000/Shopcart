@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { updateProductInCart } from "../../apis/fakeStoreProdApis";
 import CartProduct from "../../components/CartProduct/CartProduct";
 import useCartPriceSetter from "../../hooks/useCartPriceSetter";
-import useDownloadCartProducts from "../../hooks/useDownloadcartProducts";
+import useDownloadCartProducts from "../../hooks/useDownloadCartProducts";
 import UserContext from "../../providers/UserContext";
 
 
