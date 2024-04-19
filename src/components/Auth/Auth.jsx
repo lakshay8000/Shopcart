@@ -1,12 +1,16 @@
-// CSS imports-
-import { Link } from "react-router-dom";
 import "./auth.css";
-import { useEffect, useState } from "react";
 
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 
 function Auth({ authFor, onSubmit }) {
-    const [formDetails, setFormDetails] = useState({ username: "", email: "", password: "", isLoading: false });
+    const [formDetails, setFormDetails] = useState({ 
+        username: "", 
+        email: "", 
+        password: "", 
+        isLoading: false 
+    });
 
     function resetForm() {
         setFormDetails({username: "", email: "", password: "", isLoading: false});
@@ -19,12 +23,12 @@ function Auth({ authFor, onSubmit }) {
 
 
     return (
-        <div className="container">
+        <div className="container d-flex flex-column justify-content-center align-items-center">
             <div>
-                <h2 className="welcome-title text-center">Welcome to Shop Cart</h2>
+                <h2 className="welcome-title text-center w-100">Welcome to Shop Cart</h2>
             </div>
 
-            <div className="auth-wrapper">
+            <div className="auth-wrapper w-75">
 
                 <h4 className="text-center mb-4">
                     {(authFor == "login") ? "Login" : "Sign up"}
@@ -62,7 +66,6 @@ function Auth({ authFor, onSubmit }) {
                         onChange={(e) => setFormDetails({ ...formDetails, password: e.target.value })}
                     />
                 </div>
-
 
                 {/* Below button is taken from bootstrap website */}
                 <button

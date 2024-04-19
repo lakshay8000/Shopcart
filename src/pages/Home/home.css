@@ -1,3 +1,7 @@
+.homepage-wrapper {
+    margin-bottom: 4rem;
+}
+
 .home-title {
     font-size: 2.5rem;
     margin-top: 5rem;
@@ -16,4 +20,3 @@
 .category-title {
     margin-top: 3.5rem;
 }
-

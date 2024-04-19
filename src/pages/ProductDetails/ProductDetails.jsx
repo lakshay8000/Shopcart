@@ -1,57 +1,55 @@
-// CSS imports-
 import "./productDetails.css";
 
-// import img-
-import demoProductImg from "../../assets/demoProductImg.jpg";
 import axios from "axios";
-import { useEffect, useState, useContext } from "react";
+import { useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { addProductToCart, getProductInfo } from "../../apis/fakeStoreProdApis";
+import { toast } from "react-toastify";
 
-import UserContext from "../../providers/UserContext";
+import { addProductToCart } from "../../apis/fakeStoreProdApis";
+import useDownloadProductDetails from "../../hooks/usedownloadProductDetails";
 import CartContext from "../../providers/CartContext";
+import UserContext from "../../providers/UserContext";
 
 
 function ProductDetails() {
-    const [productInfo, setProductInfo] = useState(null);
-    const navigate = useNavigate();
+    const [productInfo] = useDownloadProductDetails();
     const { productId } = useParams();
-
-    async function downloadProductDetails(productId) {
-        const response = await axios.get(getProductInfo(productId));
-        // console.log(response.data);
-        setProductInfo({ ...response.data });
-    }
-
+    const navigate = useNavigate();
     const { user, setUser } = useContext(UserContext);
     const { setCart } = useContext(CartContext);
 
-    useEffect(() => {
-        downloadProductDetails(productId);
-    }, []);
-
     async function handleAddToCart() {
-        if (user) {
-            const response = await axios.put(addProductToCart(), {
-                                userId: user.userId,
-                                productId: productId
-                             });
-            
-                             setCart({...response.data});    // update cart state
+        try {
+            if (user) {
+                const response = await axios.put(addProductToCart(), {
+                    userId: user.userId,
+                    productId: productId
+                }, { withCredentials: true });
+                setCart({ ...response.data });
+                toast.success("Added product to cart", {
+                    autoClose: 1500
+                });
+            }
+            else {
+                toast.error("Please log in to add products in cart", {
+                    autoClose: 1500
+                });
+            }
+        }
+        catch (error) {
+            console.log(error.message);
         }
     }
 
-    console.log(productId);
 
     return (
         <div className="container">
-            <div className="row">
+            {
+                productInfo &&
+                (
+                    <div className="product-details-wrapper gap-3">
 
-                {
-                    productInfo &&
-                    <div className="product-details-wrapper d-flex flex-row justify-content-between align-items-start">
-
-                        <div className="product-details-img">
+                        <div className="product-details-img-wrapper d-flex justify-content-center">
                             <img id="product-details-img" src={productInfo.image} alt="product-image" />
                         </div>
 
@@ -62,7 +60,7 @@ function ProductDetails() {
                                 </div>
 
                                 <div className="product-details-price fw-bold" id="product-details-price">
-                                    {productInfo.price}
+                                    {productInfo.price} $
                                 </div>
 
                                 <div className="product-description-title fw-bold" id="product-description-title">
@@ -74,8 +72,7 @@ function ProductDetails() {
                                 </div>
                             </div>
 
-                            <div className="product-action d-flex justify-content-start gap-5">
-
+                            <div className="product-action">
                                 <div
                                     className="product-details-action btn btn-primary text-decoration-none"
                                     id="add-to-cart-button"
@@ -88,22 +85,24 @@ function ProductDetails() {
                                     className="product-details-action btn btn-warning text-decoration-none"
                                     id="go-to-cart-button"
                                     onClick={() => {
-                                        if (user.userId) {
+                                        if (user) {
                                             navigate(`/cart/${user.userId}`);
+                                        }
+                                        else {
+                                            toast.error("Please log in to go to cart", {
+                                                autoClose: 1500
+                                            });
                                         }
                                     }}
                                 >
                                     Go to Cart
                                 </div>
-
                             </div>
 
                         </div>
                     </div>
-                }
-
-
-            </div>
+                )
+            }
         </div>
     );
 }

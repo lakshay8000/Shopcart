@@ -1,11 +1,9 @@
-import { useNavigate, useSearchParams } from "react-router-dom";
-import useCategories from "../../hooks/useCategories";
-import { useEffect, useRef, useState } from "react";
-
-// CSS imports-
 import "./filterProducts.css";
 
+import { useEffect, useRef, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
+import useCategories from "../../hooks/useCategories";
 
 
 function FilterProducts({ handleSearch, handleFilter, resetFilter }) {
@@ -13,11 +11,8 @@ function FilterProducts({ handleSearch, handleFilter, resetFilter }) {
     const maxPriceOptions = [0, 20, 50, 100, 200, 500];
     let minPriceRef = useRef(0);
     let maxPriceRef = useRef(0);
-
     const [categories] = useCategories();    // fetching from custom hook
-
     const navigate = useNavigate();
-
     const [searchText, setSearchText] = useState("");
 
     // for resetting the form when category changes-
@@ -28,16 +23,15 @@ function FilterProducts({ handleSearch, handleFilter, resetFilter }) {
     }, [query.get("category")]);
 
 
-    // console.log(categories);
     return (
         <div className="product-list-sidebar d-flex flex-column">
-            <form ref={formRef}>
-                <div className="sidebar-title">Search Products</div>
+            <form ref={formRef}> 
+                <div className="sidebar-title fw-bold fs-5 ">Search Products</div>
                 <div className="sidebar-search">
                     <input
                         type="text"
                         placeholder="Search by Name"
-                        className="form-control"
+                        className="form-control w-auto"
                         onChange={(e) => setSearchText(e.target.value)}
                     />
 
@@ -51,7 +45,7 @@ function FilterProducts({ handleSearch, handleFilter, resetFilter }) {
                     </button>
                 </div>
 
-                <div className="sidebar-title fw-bold">Categories</div>
+                <div className="sidebar-title fw-bold fs-5">Categories</div>
                 <div className="category-list d-flex flex-column" id="sidebar-category-list">
                     {
                         categories &&
@@ -63,12 +57,12 @@ function FilterProducts({ handleSearch, handleFilter, resetFilter }) {
                                 >
                                     {categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}
                                 </div>
-                            )
+                            );
                         })
                     }
                 </div>
 
-                <div className="sidebar-title">Filter by Price</div>
+                <div className="sidebar-title fw-bold fs-5">Filter by Price ($)</div>
 
                 <div className="price-filter">
 
@@ -78,7 +72,7 @@ function FilterProducts({ handleSearch, handleFilter, resetFilter }) {
                             <select
                                 id="minPrice"
                                 name="minPrice"
-                                className="form-select min-price"
+                                className="form-select min-price w-auto"
                                 onChange={(e) => {
                                     minPriceRef.current = Number(e.target.value);
                                 }}
@@ -92,7 +86,7 @@ function FilterProducts({ handleSearch, handleFilter, resetFilter }) {
                                             >
                                                 {optionValue}
                                             </option>
-                                        )
+                                        );
                                     })
                                 }
                             </select>
@@ -102,7 +96,7 @@ function FilterProducts({ handleSearch, handleFilter, resetFilter }) {
                             <select
                                 id="maxPrice"
                                 name="maxPrice"
-                                className="form-select max-price"
+                                className="form-select max-price w-auto"
                                 onChange={(e) => {
                                     maxPriceRef.current = Number(e.target.value);
                                 }}
@@ -116,7 +110,7 @@ function FilterProducts({ handleSearch, handleFilter, resetFilter }) {
                                             >
                                                 {optionValue}
                                             </option>
-                                        )
+                                        );
                                     })
                                 }
                             </select>
@@ -151,7 +145,7 @@ function FilterProducts({ handleSearch, handleFilter, resetFilter }) {
                 </div>
             </form>
         </div>
-    )
+    );
 }
 
 export default FilterProducts;

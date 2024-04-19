@@ -1,6 +1,6 @@
 .footer-wrapper {
-    background-color: #f8f9fa;    /* background-color was not getting shown for this component, so i manually gave the background color similar to navbar */
+    background-color: #f8f9fa;    
     position: fixed;
-    bottom: 0;                      /* mt-auto (which was already written in the code) is not working for this component */
+    bottom: 0;                 
     width: 100%;
 }

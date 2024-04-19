@@ -1,71 +1,29 @@
-// CSS imports-
 import "./cart.css";
 
-import { Link } from "react-router-dom";
-import CartProduct from "../../components/CartProduct/CartProduct";
-import CartContext from "../../providers/CartContext";
-import { useContext, useEffect, useState } from "react";
-import { getProductInfo, updateProductInCart } from "../../apis/fakeStoreProdApis";
 import axios from "axios";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
+
+import { updateProductInCart } from "../../apis/fakeStoreProdApis";
+import CartProduct from "../../components/CartProduct/CartProduct";
+import useCartPriceSetter from "../../hooks/useCartPriceSetter";
+import useDownloadCartProducts from "../../hooks/useDownloadcartProducts";
 import UserContext from "../../providers/UserContext";
 
 
-
 function Cart() {
-    const { cart, setCart } = useContext(CartContext);
-    const [products, setProducts] = useState([]);
-
-    async function downloadCartProducts() {
-        if (cart && cart.products) {
-            const productQuantityMapping= {};
-            cart.products.forEach((product) => productQuantityMapping[product.productId] = product.quantity);
-            // console.log(productQuantityMapping);
-
-            const productsPromise = cart.products.map((product) => axios.get(getProductInfo(product.productId)))
-            const productsPromiseResponse= await axios.all(productsPromise);
-            // console.log(productsPromiseResponse);
-
-            // create downloadedProducts array and add quantity in the product object
-            const downloadedProducts= productsPromiseResponse.map((product) => { 
-                                          return (
-                                              {...product.data, quantity : productQuantityMapping[product.data.id]}
-                                          )});
-            setProducts([...downloadedProducts]);
-        }
-    }
-
-    useEffect(() => {
-        downloadCartProducts();
-    }, [cart]);
-
-
-    // for setting price details-
-    const [totalPrice, setTotalPrice] = useState(0);
-    const [netPrice, setNetPrice] = useState(0);
-    useEffect(() => {
-        let totalPriceSum= 0;
-        products.forEach((product) => {
-            totalPriceSum += (product.price * product.quantity);
-        })
-        
-        totalPriceSum= totalPriceSum.toFixed(2);
-        setTotalPrice(totalPriceSum);
-        let netPriceSum= Math.floor(totalPriceSum - 10);
-        setNetPrice(netPriceSum);
-    }, [products]);
-
-
-    const {user} = useContext(UserContext);
+    const [setCart, products] = useDownloadCartProducts();
+    const [totalPrice, netPrice] = useCartPriceSetter(products);
+    const { user } = useContext(UserContext);
 
     // we are calling this function via remove button-
     async function removeProduct(productId) {
         const response = await axios.put(updateProductInCart(), {
             userId: user.userId,
             productId: productId,
-            quantity : 0
-         });
-
-         setCart({...response.data});    // update cart state
+            quantity: 0
+        });
+        setCart({ ...response.data });
     }
 
     async function onChangeQuantity(changedQuantity, productId) {
@@ -73,10 +31,9 @@ function Cart() {
         const response = await axios.put(updateProductInCart(), {
             userId: user.userId,
             productId: productId,
-            quantity : changedQuantity
-         });
-
-         setCart({...response.data});    // update cart state
+            quantity: changedQuantity
+        }, {withCredentials : true} );
+        setCart({ ...response.data });
     }
 
 
@@ -85,27 +42,26 @@ function Cart() {
             <div className="row">
                 <h2 className="cart-title text-center">Your Cart</h2>
 
-                <div className="cart-wrapper d-flex flex-row">
-
+                <div className="cart-wrapper">
                     <div className="order-details d-flex flex-column" id="order-details">
-
                         <div className="order-details-title fw-bold">
                             Order Details
                         </div>
                         {
                             (products.length > 0) &&
-                            products.map((product) => <CartProduct 
-                                                          key= {product.id}
-                                                          title= {product.title}
-                                                          image= {product.image}
-                                                          price= {product.price}
-                                                          quantity= {product.quantity}
-                                                          onRemove= {() => removeProduct(product.id)}
-                                                          changeQuantity={(changedQuantity) => onChangeQuantity(changedQuantity, product.id)}
-                                                      /> )
+                            (
+                                products.map((product) => <CartProduct
+                                    key={product.id}
+                                    title={product.title}
+                                    image={product.image}
+                                    price={product.price}
+                                    quantity={product.quantity}
+                                    onRemove={() => removeProduct(product.id)}
+                                    changeQuantity={(changedQuantity) => onChangeQuantity(changedQuantity, product.id)}
+                                />)
+                            )
                         }
                     </div>
-
 
                     <div className="price-details d-flex flex-column" id="price-details">
 
@@ -115,7 +71,7 @@ function Cart() {
                             <div className="price-details-data">
                                 <div className="price-details-item d-flex flex-row justify-content-between">
                                     <div>Price</div>
-                                    <div id="total-price">$ {totalPrice}</div> 
+                                    <div id="total-price">$ {totalPrice}</div>
                                 </div>
                                 <div className="price-details-item d-flex flex-row justify-content-between">
                                     <div>Discount</div>
@@ -126,8 +82,8 @@ function Cart() {
                                     <div>FREE</div>
                                 </div>
                                 <div className="price-details-item d-flex flex-row justify-content-between">
-                                    <div>Total</div>
-                                    <div id="net-price">$ {netPrice}</div>   
+                                    <div>Total (rounded)</div>
+                                    <div id="net-price">$ {(totalPrice == 0) ? 0 : netPrice}</div>
                                 </div>
                             </div>
                         </div>
@@ -137,14 +93,10 @@ function Cart() {
 
                             <Link to="/" className="checkout-btn btn btn-primary text-decoration-none" > Checkout </Link>
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
         </div>
-
     );
 }
 

@@ -1,14 +1,13 @@
-import { useNavigate } from "react-router-dom";
-
-// CSS import-
 import "./productBox.css";
+
+import { useNavigate } from "react-router-dom";
 
 function ProductBox({id, productImage, name, price}) {
     const navigate= useNavigate();
     
     return (
         <div 
-            className="product-item text-decoration-none d-inline-block" 
+            className="product-item text-decoration-none d-flex flex-column align-items-center me-3" 
             onClick={() => navigate(`/products/${id}`)} 
         >
 

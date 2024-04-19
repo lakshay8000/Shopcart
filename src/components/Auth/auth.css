@@ -6,7 +6,7 @@
 
 .auth-wrapper {
     width: 35rem;
-    margin: 50px auto; /* For top and bottom 50px and auto will place it in center. */
+    margin: 50px auto; 
 }
 
 .auth-wrapper .action-link {

@@ -1,12 +1,21 @@
+.product-list-page-wrapper {
+    margin-bottom: 4rem;
+}
+
 .product-list-title {
     font-weight: normal;
     font-size: 3rem;
     letter-spacing: .15rem;
-    margin: 40px 0;
+    margin-top: 2rem;
+    margin-bottom: 2.5rem;
 }
 
 .product-list-box {
     flex-basis: 80%;
+}
+
+.sidebar-wrapper {
+    flex-basis: 20%;
 }
 
 .product-list-box .product-item:nth-child(3n) {

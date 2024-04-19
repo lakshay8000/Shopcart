@@ -1,5 +1,4 @@
-html {
-    box-sizing: border-box;
+:root {
     --blue-grey : #ecf0f1;
     --pale-blue : #2c3e50;
     --deep-grey : #999;
@@ -10,7 +9,7 @@ html {
     --light-grey : #ccc;
 }
 
-*, *::after, *::before {
+* {
     box-sizing: inherit;
 }
 
@@ -18,4 +17,3 @@ body {
     margin: 0;
     padding: 0;
 }
-
