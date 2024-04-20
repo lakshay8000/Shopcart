@@ -6,7 +6,6 @@
     font-weight: normal;
     font-size: 3rem;
     letter-spacing: .15rem;
-    margin-top: 2rem;
     margin-bottom: 2.5rem;
 }
 
@@ -16,8 +15,9 @@
 
 .sidebar-wrapper {
     flex-basis: 20%;
+    margin-top: 5.5rem;
 }
 
-.product-list-box .product-item:nth-child(3n) {
-    margin-right: 0;
+.sidebar-button {
+    margin-top: 6rem;
 }

@@ -65,17 +65,13 @@ function ProductList() {
         <div className="container">
             <div className="d-flex flex-column product-list-page-wrapper">
 
-                <h2 className="product-list-title text-center" id="product-list-title">
-                    {/* Make 1st letter capital- */}
-                    {query.get("category").charAt(0).toUpperCase() + query.get("category").slice(1)}
-                </h2>
-
                 <div className="product-list-wrapper d-flex flex-row">
                     {
                         (isMediumScreen) &&
                         (
                             <div>
                                 <Button
+                                    className="sidebar-button"
                                     color="secondary"
                                     onClick={function noRefCheck() { setSidebarIsOpen(!sidebarIsOpen); }}
                                 >
@@ -122,21 +118,30 @@ function ProductList() {
                     }
 
                     {/* List of products- */}
-                    <div className="product-list-box d-flex justify-content-center flex-wrap" id="product-list-box">
-                        {
-                            updatedProductList &&
-                            updatedProductList.map((product) => {
-                                return (
-                                    <ProductBox
-                                        key={product.id}
-                                        id={product.id}
-                                        productImage={product.image}
-                                        name={product.title.substring(0, 20) + " ..."}
-                                        price={product.price}
-                                    />
-                                );
-                            })
-                        }
+                    <div className="product-list-box d-flex flex-column align-items-center" id="product-list-box">
+
+                        <h2 className="product-list-title text-center" id="product-list-title">
+                            {/* Make 1st letter capital- */}
+                            {query.get("category").charAt(0).toUpperCase() + query.get("category").slice(1)}
+                        </h2>
+
+                        <div className="d-flex justify-content-center flex-wrap">
+                            {
+                                updatedProductList &&
+                                updatedProductList.map((product) => {
+                                    return (
+                                        <ProductBox
+                                            key={product.id}
+                                            id={product.id}
+                                            productImage={product.image}
+                                            name={product.title.substring(0, 20) + " ..."}
+                                            price={product.price}
+                                        />
+                                    );
+                                })
+                            }
+                        </div>
+
                     </div>
 
                 </div>
