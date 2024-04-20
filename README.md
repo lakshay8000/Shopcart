@@ -71,7 +71,10 @@ To utilize the FakeStore API as the backend for this project, follow these steps
 3. Follow the documentation of fakeStore API and then set the API base URL in the `.env` file.
 4. Modify the APIs in the "apis" file in "src" folder, if required according to FakeStore API documentation.
 
-**Note**: The backend of this project has been modified to add additional functionalities to the FakeStore API.
+
+**Backend Information:**
+
+The backend of this project has been modified to add additional functionalities to the FakeStore API. It's hosted on a free instance backend deployment, which may experience delays due to inactivity. Requests might be delayed by up to 50 seconds if the backend instance needs to spin up. Please keep this in mind when testing or using the application.
 
 
 ## Feedback
