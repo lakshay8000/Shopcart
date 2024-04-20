@@ -1,6 +1,14 @@
 **Shopcart: A Feature-Rich E-commerce Website**
 
 
+**Deployed App**
+
+The project is deployed and accessible at the following link:
+[ShopCart 8000](https://shopcart8000.netlify.app/)
+
+Feel free to visit the deployed app to explore its features and functionality.
+
+
 **Overview**
 
 Welcome to ShopCart, an e-commerce website project built to showcase my skills and expertise in front-end development, API integration, and user experience design. ShopCart offers a range of features designed to simulate a real shopping experience while demonstrating proficiency in creating dynamic, user-friendly, and responsive web applications accessible across all screen sizes. ShopCart leverages the power of React and adheres to modern development practices to deliver a seamless user experience.
