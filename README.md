@@ -88,3 +88,8 @@ The backend of this project has been modified to add additional functionalities 
 ## Feedback
 
 This project is created as a personal project for inclusion in my portfolio. Its purpose is to showcase my skills in building React applications. If you have any questions or feedback, feel free to reach out.
+
+
+## LICENSE:
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
